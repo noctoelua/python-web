@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# backend access lodalhost:6000
+
 echo -e "\n\n\n\n\n\n\n\n\n\n" >> /var/log/shizai/web_log.log
 
 ps -eo pid,args | grep app_backend | awk '{print$1}' | head -n 1 | xargs -I{} kill {}

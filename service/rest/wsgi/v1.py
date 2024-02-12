@@ -1,3 +1,8 @@
+"""python 基本的な使い方をしているAPI集
+
+rest api 内で完結する.
+"""
+
 import json
 from flask import Blueprint, jsonify
 
@@ -8,7 +13,7 @@ from libs.MyLogger import Logger
 from models import Test
 
 prefix_base = "/v1"
-app = Blueprint("web", __name__, url_prefix=prefix_base)
+app = Blueprint("rest_v1", __name__, url_prefix=prefix_base)
 
 
 def setup(root_app, url_prefix=""):
@@ -18,7 +23,7 @@ def setup(root_app, url_prefix=""):
 
 
 @app.route('/status')
-@rest.common('011')
+@rest.common('111')
 def hello_world_v1():
     Logger.info("access status")
     import random
@@ -45,7 +50,7 @@ def hello_world_v1():
 
 
 @app.route('/test')
-@rest.common('012')
+@rest.common('112')
 def get_test_recode():
     Logger.info('access test')
     test = Test.get_top_user

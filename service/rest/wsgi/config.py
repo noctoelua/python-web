@@ -55,11 +55,15 @@ class BaseConfig:
 
 
 class LocalConfig(object):
+    """local 用のcinfig
+
+    log の level を DEBUG にすると,ユーザー設定した format で利用されている変数の利用ができなくてエラーがたくさん出るため注意.
+    """
     DICTCONFIG = {
         "version": 1,
         "disable_existing_loggers": False,
         "root": {
-            "level": "DEBUG",
+            "level": "INFO",
             "handlers": [
                 "logFileHandler"
             ]
