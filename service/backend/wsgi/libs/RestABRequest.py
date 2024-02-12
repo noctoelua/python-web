@@ -33,6 +33,10 @@ def setup_ab_request(app):
 
     @app.after_request
     def after_request(response):
+        # 処理にかかった時間を出力
+        proc_time = (time.time() - g.access_time) * 1000
+        Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
+
         # レスポンスのログを可能であれば出しておく
         try:
             res = json.loads(response.get_data())
@@ -40,13 +44,9 @@ def setup_ab_request(app):
         except Exception:
             pass
 
-        # 処理にかかった時間を出力
-        proc_time = (time.time() - g.access_time) * 1000
-        Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
-
         # rest にログ用key, id を返す
         res = make_response(response)
-        res.headers['LOG_UNIQ_KEY'] = g.log_uniq_key
-        res.headers['LOG_COUNT'] = g.log_count
+        res.headers['LOG_UNIQ_KEY'] = str(g.log_uniq_key)
+        res.headers['LOG_COUNT'] = str(g.log_count)
 
         return res

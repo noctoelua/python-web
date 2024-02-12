@@ -1,4 +1,4 @@
-import v1
+import v1, v2
 import json
 from config import config
 from flask import Flask, jsonify
@@ -16,6 +16,7 @@ app.config["JSON_AS_ASCII"] = False
 setup_logger(dict_config=config.DICTCONFIG)
 setup_ab_request(app)
 v1.setup(app)
+v2.setup(app)
 
 
 @app.route('/status', methods=["GET", "POST"])

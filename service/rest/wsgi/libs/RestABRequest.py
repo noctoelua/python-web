@@ -33,15 +33,15 @@ def setup_ab_request(app):
 
     @app.after_request
     def after_request(response):
+        # 処理にかかった時間を出力
+        proc_time = (time.time() - g.access_time) * 1000
+        Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
+
         # レスポンスのログを可能であれば出しておく
         try:
             res = json.loads(response.get_data())
             Logger.info('[RESPONSE] {}'.format(res))
         except Exception:
             pass
-
-        # 処理にかかった時間を出力
-        proc_time = (time.time() - g.access_time) * 1000
-        Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
 
         return response
