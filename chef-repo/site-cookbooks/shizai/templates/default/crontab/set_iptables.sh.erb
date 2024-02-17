@@ -1,0 +1,38 @@
+#!/bin/bash
+# iptables の設定用shell
+
+# 設定初期化
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+
+# sshをローカル内許可
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT -s 192.168.1.0/24
+
+# webサーバーからのdbアクセス許可
+if `hostname -s | grep -q dev`; then
+    iptables -A INPUT -p tcp --dport 3306 -j ACCEPT -s 192.168.1.235/32
+else
+    iptables -A INPUT -p tcp --dport 3306 -j ACCEPT -s 192.168.1.230/32
+fi
+
+
+# input 設定したもの以外を拒否
+iptables -P INPUT DROP
+
+# 内部からの送信を許可
+iptables -P OUTPUT ACCEPT
+
+# 経由を拒否
+iptables -P FORWARD DROP
+
+# 自ホストからのアクセスをすべて許可
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# 内部から行ったアクセスに対する外部からの返答アクセスを許可
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# ping はすべて許可
+iptables -I INPUT -p icmp --icmp-type 0 -j ACCEPT
+iptables -I INPUT -p icmp --icmp-type 8 -j ACCEPT

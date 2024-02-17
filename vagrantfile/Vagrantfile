@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/centos-7.8"
   config.vm.hostname = "shizai.local"
   config.vm.network "private_network", ip: "192.168.33.77"
+  define_machine_name config, "shizai"
   config.vm.synced_folder current_path, "/var/vagrantshare"
   config.vm.provision "shell", path: "./provisioning.sh"
   config.vm.provider "virtualbox" do |vb|
