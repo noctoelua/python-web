@@ -1,0 +1,11 @@
+/var/log/mysql/*log
+{
+    create 644 mysql mysql
+    notifempty
+    daily
+    rotate 7
+    missingok
+    sharedscripts
+    compress
+    delaycompress
+}

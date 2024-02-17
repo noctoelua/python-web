@@ -33,25 +33,25 @@ fi
 
 # install ruby
 # chefはrubyで書かれるため
-# if [[ -z `rpm -qa | grep ruby` ]]; then
-#     echo "--------------------------------------------------"
-#     echo "  install ruby"
-#     echo "--------------------------------------------------"
-#     yum install -y ruby
-# else
-#     echo "  - allready install ruby"
-# fi
+if [[ -z `rpm -qa | grep ruby` ]]; then
+    echo "--------------------------------------------------"
+    echo "  install ruby"
+    echo "--------------------------------------------------"
+    yum install -y ruby
+else
+    echo "  - allready install ruby"
+fi
 
 # install chef
 # 本体のインストール. 手元にあるファイルを使用し実行
-# if [[ -z `rpm -qa | grep chef` ]]; then
-#     echo "--------------------------------------------------"
-#     echo "  install chef"
-#     echo "--------------------------------------------------"
-#     rpm -ivh --nosignature ./chef-14.5.33-1.el7.x86_64.rpm
-# else
-#     echo "  - allready install chef"
-# fi
+if [[ -z `rpm -qa | grep chef` ]]; then
+    echo "--------------------------------------------------"
+    echo "  install chef"
+    echo "--------------------------------------------------"
+    rpm -ivh --nosignature /var/vagrantshare/vagrantfile/chef-14.5.33-1.el7.x86_64.rpm
+else
+    echo "  - allready install chef"
+fi
 
 # user add
 if [[ -z `cat /etc/passwd | grep admin` ]]; then
@@ -85,9 +85,7 @@ else
 fi
 
 # chef実行
-# chef-solo -c ./chef-repo/solo.rb -j ./chef-repo/nodes/`hostname -s`.json
-# nmap
-# tcpdump
+chef-solo -c /var/vagrantshare/chef-repo/solo.rb -j /var/vagrantshare/chef-repo/nodes/`hostname -s`.json
 
 # docker 関連ファイル配置
 # echo "--------------------------------------------------"

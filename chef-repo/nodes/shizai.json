@@ -1,0 +1,58 @@
+{
+    "name": "shizai",
+    "colored-shell": {
+        "root": {
+            "color": "red"
+        },
+        "ope": {
+            "color": "green"
+        },
+        "admin": {
+            "color": "yellow"
+        }
+    },
+    "mariadb": {
+        "version": "11.2.2",
+        "root_password": "shizai",
+        "readonly_alias": [
+            "admin",
+            "ope"
+        ],
+        "databases": {
+            "shizai": {
+                "users": {
+                    "shizai": {
+                        "password": "shizai",
+                        "target": "shizai",
+                        "hosts": [
+                            "localhost"
+                        ],
+                        "privileges": [
+                            "ALL"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "logrotate": {
+        "services": [
+            "mysql"
+        ]
+    },
+	"crontab": {
+		"template_tools": [
+            "db_backup.sh",
+            "set_iptables.sh"
+		]
+	},
+    "run_list": [
+        "recipe[shizai::yum_init]",
+        "recipe[shizai::colored-shell]",
+        "recipe[shizai::default]",
+        "recipe[shizai::iptables]",
+        "recipe[shizai::mariadb]",
+        "recipe[shizai::logrotate]",
+        "recipe[shizai::crontab]"
+    ]
+}

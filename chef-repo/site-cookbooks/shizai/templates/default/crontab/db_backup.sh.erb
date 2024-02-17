@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# データベースをバックアップするスクリプト
+#
+#   mysqldump の結果をまとめた bz2 を作成する
+#
+#   一定期間(7日)以上前のバックアップファイルは削除する
+#
+# $Id$
+
+DATE=`date +%Y%m%d`
+BACKUPDIR=/var/service/dbbackup
+LOCAL_HOST=`hostname -s`
+KEEP_PERIOD=7
+OLDDATE=`date --date "${KEEP_PERIOD} day ago" +%Y%m%d`
+
+# mysqldump
+mysqldump -u root -p<%= node['mariadb']['root_password'] %> --events --all-databases --lock-all-tables --master-data=1 --flush-logs \
+| bzip2 -c > ${BACKUPDIR}/${LOCAL_HOST}-mysqldump-${DATE}.bz2
+
+# delete old backup
+if [ -f $BACKUPDIR/${LOCAL_HOST}-mysqldump-$OLDDATE.bz2 ]; then
+    rm $BACKUPDIR/${LOCAL_HOST}-mysqldump-$OLDDATE.bz2
+fi
