@@ -8,6 +8,11 @@ Base = declarative_base()
 
 
 def get_config():
+    """config を環境ごとに取得する関数.
+
+    Returns:
+        <class>
+    """
     host_env = os.environ.get('POSITION', 'LOCAL')
     if host_env == 'LOCAL':
         return LocalConfig
@@ -15,7 +20,12 @@ def get_config():
         return LocalConfig
 
 
-class BaseConfig:
+class BaseConfig(object):
+    """ベースとなる設定.
+    各環境のクラスで継承して利用する.
+
+    DICTCINFIG: Logger で利用する設定一覧のdict
+    """
     DICTCONFIG = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -54,7 +64,7 @@ class BaseConfig:
     # LOGFILE = '/var/log/shizai/web_log.log'
 
 
-class LocalConfig(object):
+class LocalConfig(BaseConfig):
     DICTCONFIG = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -85,11 +95,18 @@ class LocalConfig(object):
     # LOG_FORMAT = '%(asctime)s [%(levelname)s] [%(log_uniq_key)s:%(log_count)s]: %(message)s, %(txt)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]'
     # SET_LOGLEVEL = DEBUG
     # DB_URI = "mysql+pymysql://beginner:beginner@{localhost}:3306/TRAINING?charset=utf8"
-    SQLITE_DB_URI = "sqlite:///test.sqlite3"
+    # SQLITE_DB_URI = "sqlite:///test.sqlite3"
+    DB_USER = "shizai"
+    DB_PASS = "shizai"
+    DB_HOST = "localhost"
+    DB_PORT = "3306"
+    DB_DATABASE = "shizai"
+    DB_URI = f'mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}?charset=utf8'
 
 
-def get_connection(DB_URI):
-    return __MyDb(DB_URI)
+def get_connection():
+    config = get_config()
+    return __MyDb(config.DB_URI)
 
 
 class __MyDb:
