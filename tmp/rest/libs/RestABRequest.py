@@ -6,7 +6,7 @@ from flask import g, request
 from libs.MyLogger import Logger
 
 
-def setup_ab_request(app):
+def setup_ab_request_rest(app):
     @app.before_request
     def before_request():
         # 処理時間計測開始

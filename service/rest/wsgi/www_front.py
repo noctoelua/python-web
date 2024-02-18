@@ -1,8 +1,16 @@
+import os
+import sys
 import v1, v2
 import json
 from config import config
 from flask import Flask, jsonify
-from libs.RestABRequest import setup_ab_request
+
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__), '../../common'
+    )
+)
+from libs.RestABRequest import setup_ab_request_rest
 from libs.MyLogger import Logger, setup_logger
 from libs.Decorators import rest
 
@@ -14,7 +22,7 @@ app.config["JSON_AS_ASCII"] = False
 
 
 setup_logger(dict_config=config.DICTCONFIG)
-setup_ab_request(app)
+setup_ab_request_rest(app)
 v1.setup(app)
 v2.setup(app)
 
@@ -27,16 +35,6 @@ def hello_world():
     Logger.warning('TEST3')
     Logger.error('TEST4')
     return jsonify({"message": "おーけー"})
-    # return OK
-
-    # return {
-    #     "name": "deep insider",
-    #     "url": "https://aaa",
-    #     "staffs": [
-    #         {"name": "一色", "age": 40},
-    #         {"name": "かわさき", "age": 60}
-    #     ]
-    # }
 
 
 @app.route('/status_jsonify', methods=["GET", "POST"])
@@ -57,5 +55,5 @@ def hello_world_dict():
     return {"message": "おーけー"}
 
 
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+# if __name__ == "__main__":
+#     app.run(debug=True, host='0.0.0.0')

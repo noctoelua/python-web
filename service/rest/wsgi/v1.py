@@ -3,14 +3,20 @@
 rest api 内で完結する.
 """
 
+import os
+import sys
 import json
 from flask import Blueprint, jsonify
 
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__), '../../common'
+    )
+)
 from libs.Decorators import rest
 from libs.MyException import RESTAPIException
 from libs.MyLogger import Logger
 
-from models import Test
 
 prefix_base = "/v1"
 app = Blueprint("rest_v1", __name__, url_prefix=prefix_base)
@@ -53,10 +59,8 @@ def hello_world_v1():
 @rest.common('112')
 def get_test_recode():
     Logger.info('access test')
-    test = Test.get_top_user
     return jsonify(
         {
             "message": "testおーけー"
         }
     )
-    # return test
