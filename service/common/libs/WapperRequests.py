@@ -3,6 +3,7 @@ from flask import g
 
 from libs.MyLogger import Logger
 
+
 class wapper_requests(object):
     """requests の wapper クラス.
     backend にアクセスする際に利用, LOG_UNIW_KEY/LOG_COUNT の受け渡しをする
@@ -27,6 +28,7 @@ class wapper_requests(object):
         Logger.info(f"response status_code={res.status_code}, headers={res.headers}, res={res.json()}")
 
         return res.json()
+
 
 class origin_requests(object):
     """requests のログ出力を補助する wapper クラス.

@@ -4,7 +4,6 @@ rest api 内で完結する.
 """
 import os
 import sys
-import json
 from flask import Blueprint, jsonify
 
 sys.path.append(
@@ -13,8 +12,6 @@ sys.path.append(
     )
 )
 from libs.Decorators import rest
-from libs.MyException import RESTAPIException
-from libs.MyLogger import Logger
 from libs.WapperRequests import origin_requests, wapper_requests
 
 
@@ -33,12 +30,14 @@ def setup(root_app, url_prefix=""):
 def hello_world_v1():
     return jsonify({"message": "v2 おーけー"})
 
+
 @app.route('/call2')
 @rest.common('202')
 def call():
     url = 'http://192.168.33.77:6000/status'
     res = origin_requests.get(url=url)
     return res
+
 
 @app.route('/call3')
 @rest.common('203')

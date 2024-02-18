@@ -1,5 +1,4 @@
 import sqlalchemy as sa
-from config import config
 
 from config import get_connection, Base
 from libs.Decorators import db_log
@@ -13,7 +12,6 @@ class Shizai1(Base):
     data2 = sa.Column("data2", sa.VARCHAR(255))
     ins_datetime = sa.Column("ins_datetime", sa.DateTime)
     upt_datetime = sa.Column("upt_datetime", sa.DateTime)
-
 
     @classmethod
     @db_log(alert_limit=0.01)

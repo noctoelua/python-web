@@ -1,6 +1,7 @@
 import os
 import sys
-import v1, v2
+import v1
+import v2
 import json
 from config import config
 from flask import Flask, jsonify
