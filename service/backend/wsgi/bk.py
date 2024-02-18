@@ -1,10 +1,15 @@
 # ライブラリ
+import os
+import sys
 import json
-from flask import Blueprint, jsonify
+from flask import Blueprint
 # 自前
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__), '../../common'
+    )
+)
 from libs.Decorators import rest
-from libs.MyException import RESTAPIException
-from libs.MyLogger import Logger
 from models.Shizai1 import Shizai1
 
 prefix_base = "/bk"

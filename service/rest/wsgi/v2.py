@@ -2,16 +2,18 @@
 
 rest api 内で完結する.
 """
-
-import json
+import os
+import sys
 from flask import Blueprint, jsonify
 
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__), '../../common'
+    )
+)
 from libs.Decorators import rest
-from libs.MyException import RESTAPIException
-from libs.MyLogger import Logger
 from libs.WapperRequests import origin_requests, wapper_requests
 
-from models import Test
 
 prefix_base = "/v2"
 app = Blueprint("rest_v2", __name__, url_prefix=prefix_base)
@@ -28,12 +30,14 @@ def setup(root_app, url_prefix=""):
 def hello_world_v1():
     return jsonify({"message": "v2 おーけー"})
 
-@app.route('/call')
+
+@app.route('/call2')
 @rest.common('202')
 def call():
     url = 'http://192.168.33.77:6000/status'
-    res = wapper_requests.get(url=url)
+    res = origin_requests.get(url=url)
     return res
+
 
 @app.route('/call3')
 @rest.common('203')

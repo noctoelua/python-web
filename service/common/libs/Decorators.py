@@ -10,6 +10,12 @@ from libs.ErrorMessage import Error
 
 
 class rest():
+    """API 用デコレータ.
+    アクセス前処理はなし.
+    アクセス後はレスポンスに
+    * StatusCode を追加
+    * Exception 処理
+    """
     @classmethod
     def common(cls, api_pre_code):
         def deco(f):
