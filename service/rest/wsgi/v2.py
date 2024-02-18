@@ -38,6 +38,6 @@ def call():
 @app.route('/call3')
 @rest.common('203')
 def call3():
-    url = 'http://192.168.33.77:6000/status'
-    res = origin_requests.get(url)
-    return res.json()
+    url = 'http://192.168.33.77:6000/bk/status'
+    res = wapper_requests.get(url)
+    return res

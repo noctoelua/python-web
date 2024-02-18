@@ -7,8 +7,14 @@ from libs.MyLogger import Logger
 
 
 def setup_ab_request(app):
+    """before_requests/after_requests 定義用関数.
+    """
     @app.before_request
     def before_request():
+        """before_requests 定義.
+        アクセスの情報出力及び,
+        ログ用変数を設定
+        """
         # 処理時間計測開始
         g.access_time = time.time()
 
@@ -25,22 +31,26 @@ def setup_ab_request(app):
 
         # リクエストのエンドポイント/jsonを表示
         if request.method == 'GET':
-            Logger.info('[REQUEST] GET: endpoint={}'.format(request.url))
+            Logger.info(f'[REQUEST] GET: endpoint={request.url}, access={request.remote_addr}')
         elif request.method == 'POST':
-            Logger.info('[REQUEST] POST: endpoint={}, json={}'.format(request.url, request.get_json()))
+            Logger.info(f'[REQUEST] POST: endpoint={request.url}, json={request.get_json()}')
         else:
             pass
 
     @app.after_request
     def after_request(response):
+        """after_request 定義.
+        アクセスにかかった時間等ログ出力,
+        front へ log_uniq_key/log_count を返すためにヘッダー追加
+        """
         # 処理にかかった時間を出力
-        proc_time = (time.time() - g.access_time) * 1000
-        Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
+        proc_time = (time.time() - g.access_time)
+        Logger.info(f'time: {round(proc_time, 3)}   - done')
 
         # レスポンスのログを可能であれば出しておく
         try:
             res = json.loads(response.get_data())
-            Logger.info('[RESPONSE] {}'.format(res))
+            Logger.info(f'[RESPONSE] {res}')
         except Exception:
             pass
 

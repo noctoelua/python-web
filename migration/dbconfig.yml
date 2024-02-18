@@ -1,0 +1,9 @@
+shizai:
+    dialect: mysql
+    datasource: root:shizai@(127.0.0.1:3306)/shizai?parseTime=true&loc=Local
+    dir: ./mysql_shizai
+    table: migrations
+
+# ./bin/sql-migrate up -dryrun -env="shizai"
+# ./bin/sql-migrate up -env="shizai"
+# ./bin/sql-migrate down -env="shizai"

@@ -1,4 +1,5 @@
 import json
+import time
 import traceback
 from flask import jsonify
 from functools import wraps
@@ -51,3 +52,31 @@ class rest():
 
             return _wrapper
         return deco
+
+
+def db_log(log_flg=True, alert_limit=None):
+    """db アクセス用ログ.
+    経過時間及び, アクセスにかかった時間が想定以上の場合WARNINGレベルでエラーを出す.
+    エラーが起こっても例外処理を行わないので各自頑張って.
+
+    Args:
+        log_flg <bool>    : ログ出力フラグ.
+                            オフにするならそもそもデコレータ利用しなくてよい.
+        alert_limit <float> : アクセスにかかった時間がこれ以上だとWARNINGレベルでログを出す.
+    """
+    def deco(f):
+        @wraps(f)
+        def _wrapper(*args, **keywords):
+            start = time.time()
+            if log_flg:
+                Logger.info(f'access {f.__name__}')
+            ret = f(*args, **keywords)
+            proc_time = (time.time() - start)
+            if log_flg:
+                Logger.info(f'success {f.__name__}, time={round(proc_time, 3)}')
+            if alert_limit:
+                if alert_limit < proc_time:
+                    Logger.warning(f'{f.__name__} is over alert_limit, time={proc_time}')
+            return ret
+        return _wrapper
+    return deco
