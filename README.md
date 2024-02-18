@@ -5,17 +5,17 @@
 
 ## ディレクトリ
 ### chef-repo
-chef関連を配置
+* chef関連を配置
 
 ### migration
-migration 関連を配置
+* migration 関連を配置
 
 ### script
-テスト用の curl をまとめたものを配置
+* テスト用の curl をまとめたものを配置
 
 ### service
-サービス利用するコードを配置.
-docker 化の際はこのファイル配下を volume するイメージ
+* サービス利用するコードを配置.
+* docker 化の際はこのファイル配下を volume するイメージ
 
 ### vagrant
-ローカル環境作成する際の vagrant 関連ファイルを配置
+* ローカル環境作成する際の vagrant 関連ファイルを配置
