@@ -4,6 +4,11 @@ from flask import g
 from libs.MyLogger import Logger
 
 class wapper_requests(object):
+    """requests の wapper クラス.
+    backend にアクセスする際に利用, LOG_UNIW_KEY/LOG_COUNT の受け渡しをする
+    Args:
+        object (_type_): _description_
+    """
     def get(*a, **kw):
         # header に log_uniq_key / log_count を追加
         if "headers" in kw:
@@ -24,6 +29,10 @@ class wapper_requests(object):
         return res.json()
 
 class origin_requests(object):
+    """requests のログ出力を補助する wapper クラス.
+    ログのみのため requests と使い方は同じ.
+    不要な場合は各ファイルで requests を使ってください.
+    """
     def get(*a, **kw):
         # アクセス
         Logger.info(f"requests_args={kw}")

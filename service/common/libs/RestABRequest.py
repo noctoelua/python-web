@@ -14,8 +14,14 @@ from libs.MyLogger import Logger
 
 
 def setup_ab_request_rest(app):
+    """rest の before_requests/after_requests 定義用関数.
+    """
     @app.before_request
     def before_request():
+        """before_requests 定義.
+        アクセスの情報出力及び,
+        ログ用変数を設定
+        """
         # 処理時間計測開始
         g.access_time = time.time()
 
@@ -40,6 +46,10 @@ def setup_ab_request_rest(app):
 
     @app.after_request
     def after_request(response):
+        """after_request 定義.
+        アクセスにかかった時間等ログ出力,
+        front へ log_uniq_key/log_count を返すためにヘッダー追加
+        """
         # 処理にかかった時間を出力
         proc_time = (time.time() - g.access_time) * 1000
         Logger.info('time: {proc}   - done'.format(proc=round(proc_time, 3)))
@@ -55,7 +65,7 @@ def setup_ab_request_rest(app):
 
 
 def setup_ab_request_backend(app):
-    """before_requests/after_requests 定義用関数.
+    """backend の before_requests/after_requests 定義用関数.
     """
     @app.before_request
     def before_request():
@@ -102,7 +112,7 @@ def setup_ab_request_backend(app):
         except Exception:
             pass
 
-        # rest にログ用key, id を返す
+        # rest にログ用 log_uniq_key/log_count を返す
         res = make_response(response)
         res.headers['LOG_UNIQ_KEY'] = str(g.log_uniq_key)
         res.headers['LOG_COUNT'] = str(g.log_count)
