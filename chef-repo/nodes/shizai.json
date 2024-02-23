@@ -25,7 +25,9 @@
                         "password": "shizai",
                         "target": "shizai",
                         "hosts": [
-                            "localhost"
+                            "localhost",
+                            "192.168.33.77",
+                            "172.16.10.%"
                         ],
                         "privileges": [
                             "ALL"
@@ -53,6 +55,7 @@
         "recipe[shizai::iptables]",
         "recipe[shizai::mariadb]",
         "recipe[shizai::logrotate]",
-        "recipe[shizai::crontab]"
+        "recipe[shizai::crontab]",
+        "recipe[shizai::docker]"
     ]
 }

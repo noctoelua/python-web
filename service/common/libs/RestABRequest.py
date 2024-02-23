@@ -28,9 +28,9 @@ def setup_ab_request_rest(app):
         # ヘッダー取得
         headers = request.headers
         # ログのユニークキー初期化処理
-        g.log_uniq_key = headers.get('LOG_UNIQ_KEY', '%08d' % random.randint(0, 99999999))
+        g.log_uniq_key = headers.get('LOG-UNIQ-KEY', '%08d' % random.randint(0, 99999999))
         # ログカウント数初期化処理
-        g.log_count = headers.get('LOG_COUNT', 0)
+        g.log_count = headers.get('LOG-COUNT', 0)
         if isinstance(g.log_count, str) and str.isnumeric(g.log_count):
             g.log_count = int(g.log_count)
         else:
@@ -38,9 +38,9 @@ def setup_ab_request_rest(app):
 
         # リクエストのエンドポイント/jsonを表示
         if request.method == 'GET':
-            Logger.info('[REQUEST] GET: endpoint={}'.format(request.url))
+            Logger.info(f'[REQUEST] GET: endpoint={request.url}, access={request.remote_addr}')
         elif request.method == 'POST':
-            Logger.info('[REQUEST] POST: endpoint={}, json={}'.format(request.url, request.get_json()))
+            Logger.info(f'[REQUEST] POST: endpoint={request.url}, json={request.get_json()}')
         else:
             pass
 
@@ -79,9 +79,9 @@ def setup_ab_request_backend(app):
         # ヘッダー取得
         headers = request.headers
         # ログのユニークキー初期化処理
-        g.log_uniq_key = headers.get('LOG_UNIQ_KEY', '%08d' % random.randint(0, 99999999))
+        g.log_uniq_key = headers.get('LOG-UNIQ-KEY', '%08d' % random.randint(0, 99999999))
         # ログカウント数初期化処理
-        g.log_count = headers.get('LOG_COUNT', 0)
+        g.log_count = headers.get('LOG-COUNT', 0)
         if isinstance(g.log_count, str) and str.isnumeric(g.log_count):
             g.log_count = int(g.log_count)
         else:
@@ -114,7 +114,7 @@ def setup_ab_request_backend(app):
 
         # rest にログ用 log_uniq_key/log_count を返す
         res = make_response(response)
-        res.headers['LOG_UNIQ_KEY'] = str(g.log_uniq_key)
-        res.headers['LOG_COUNT'] = str(g.log_count)
+        res.headers['LOG-UNIQ-KEY'] = str(g.log_uniq_key)
+        res.headers['LOG-COUNT'] = str(g.log_count)
 
         return res

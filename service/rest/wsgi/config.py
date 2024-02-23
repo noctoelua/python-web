@@ -8,14 +8,27 @@ Base = declarative_base()
 
 
 def get_config():
+    """config を環境ごとに取得する関数.
+
+    Returns:
+        <class>
+    """
     host_env = os.environ.get('POSITION', 'LOCAL')
     if host_env == 'LOCAL':
         return LocalConfig
+    if host_env == 'DEV':
+        return DevelopConfig
     else:
         return LocalConfig
 
 
-class BaseConfig:
+class BaseConfig(object):
+    """ベースとなる設定.
+    各環境のクラスで継承して利用する.
+
+    DICTCINFIG  : Logger で利用する設定一覧の dict
+    BACKEND_URL : backend コンテナのURL
+    """
     DICTCONFIG = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -51,12 +64,11 @@ class BaseConfig:
             }
         }
     }
-    # LOGFILE = '/var/log/shizai/web_log.log'
+    BACKEND_URL = 'http://192.168.33.77:6000'
 
-
-class LocalConfig(object):
+class LocalConfig(BaseConfig):
     """local 用のcinfig
-
+    docker ではなく素建て用.
     log の level を DEBUG にすると,ユーザー設定した format で利用されている変数の利用ができなくてエラーがたくさん出るため注意.
     """
     DICTCONFIG = {
@@ -85,11 +97,36 @@ class LocalConfig(object):
             }
         }
     }
-    # LOGFILE = '/var/log/shizai/web_log.log'
-    # LOG_FORMAT = '%(asctime)s [%(levelname)s] [%(log_uniq_key)s:%(log_count)s]: %(message)s, %(txt)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]'
-    # SET_LOGLEVEL = DEBUG
-    # DB_URI = "mysql+pymysql://beginner:beginner@{localhost}:3306/TRAINING?charset=utf8"
-    SQLITE_DB_URI = "sqlite:///test.sqlite3"
+    BACKEND_URL = 'http://192.168.33.77:6000'
+
+
+class DevelopConfig(BaseConfig):
+    """DEV 用のcinfig
+    """
+    DICTCONFIG = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "root": {
+            "level": "INFO",
+            "handlers": [
+                "consoleHandler"
+            ]
+        },
+        "handlers": {
+            "consoleHandler": {
+                "class": "logging.StreamHandler",
+                "level": "INFO",
+                "formatter": "consoleFormatter",
+                "stream": "ext://sys.stdout"
+            }
+        },
+        "formatters": {
+            "consoleFormatter": {
+                "format": "%(asctime)s [%(levelname)-7s] [%(log_uniq_key)s:%(log_count)s] %(message)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
+            }
+        }
+    }
+    BACKEND_URL = os.environ.get('BACKEND_PASS', 'http://localhost:6000')
 
 
 def get_connection(DB_URI):

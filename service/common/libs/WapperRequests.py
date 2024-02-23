@@ -6,7 +6,7 @@ from libs.MyLogger import Logger
 
 class wapper_requests(object):
     """requests の wapper クラス.
-    backend にアクセスする際に利用, LOG_UNIW_KEY/LOG_COUNT の受け渡しをする
+    backend にアクセスする際に利用, LOG_UNIW_KEY/LOG-COUNT の受け渡しをする
     Args:
         object (_type_): _description_
     """
@@ -16,15 +16,15 @@ class wapper_requests(object):
             headers = dict(**kw["headers"])
         else:
             headers = dict()
-        headers["LOG_UNIQ_KEY"] = str(g.log_uniq_key)
-        headers["LOG_COUNT"] = str(g.log_count + 1)
+        headers["LOG-UNIQ-KEY"] = str(g.log_uniq_key)
+        headers["LOG-COUNT"] = str(g.log_count + 1)
         kw["headers"] = headers
 
         # アクセス
         Logger.info(f"requests_args={kw}")
         res = requests.get(*a, **kw)
         # backend からの log_count を取得
-        g.log_count = int(res.headers.get("LOG_COUNT", g.log_count))
+        g.log_count = int(res.headers.get("LOG-COUNT", g.log_count))
         Logger.info(f"response status_code={res.status_code}, headers={res.headers}, res={res.json()}")
 
         return res.json()

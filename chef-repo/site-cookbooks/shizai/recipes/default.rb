@@ -42,5 +42,12 @@ execute "yum install bzip2 -y" do
   command "yum install bzip2 -y"
   user "root"
   group "root"
-  not_if "rpm -qa | grep bzip2 | grep -v bzip2-libs"
+  not_if "rpm -qa | grep bzip2"
+end
+
+execute "yum install bind-utils -y" do
+  command "yum install bind-utils -y"
+  user "root"
+  group "root"
+  not_if "rpm -qa | grep bind-utils"
 end

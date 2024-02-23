@@ -1,0 +1,66 @@
+version: "3.2"
+
+services:
+  shizai-nginx:
+    container_name: shizai-nginx
+    image: shizai-nginx
+    build: ./shizai-nginx/
+    restart: always
+    environment:
+      # rest
+      - NGINX_5000_PASS='shizai-rest:5000'
+      # バックエンド
+      - NGINX_6000_PASS='shizai-backend:6000'
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/log/nginx:/var/log/nginx
+    ports:
+      - 80:80
+      - 5000:5000
+      - 6000:6000
+    networks:
+      shizai_net:
+        ipv4_address: 172.16.10.10
+
+  shizai-rest:
+    container_name: shizai-rest
+    image: shizai-rest
+    build: ./shizai-rest/
+    restart: always
+    environment:
+      - POSITION=DEV
+      - BACKEND_PASS=http://shizai-nginx:6000/
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      - "uwsgi"
+      - "--ini"
+      - "/var/service/rest/wsgi/app_rest.ini"
+    networks:
+      shizai_net:
+        ipv4_address: 172.16.10.20
+
+  shizai-backend:
+    container_name: shizai-backend
+    image: shizai-backend
+    build: ./shizai-backend/
+    restart: always
+    environment:
+      - POSITION=DEV
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      - "uwsgi"
+      - "--ini"
+      - "/var/service/backend/wsgi/app_backend.ini"
+    networks:
+      shizai_net:
+        ipv4_address: 172.16.10.30
+
+networks:
+  shizai_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.10.0/24

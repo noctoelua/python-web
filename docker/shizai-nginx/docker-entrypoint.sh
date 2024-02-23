@@ -1,0 +1,101 @@
+#! /bin/bash
+
+set -e
+
+nginx_cnf()
+{
+echo "user              nginx;"
+echo "worker_processes  4;"
+echo ""
+echo "error_log  /var/log/nginx/error.log;"
+echo ""
+echo "pid        /var/run/nginx.pid;"
+echo ""
+echo ""
+echo "events {"
+echo "    worker_connections  1024;"
+echo "}"
+echo ""
+echo ""
+echo "http {"
+echo "    include       /etc/nginx/mime.types;"
+echo "    default_type  application/octet-stream;"
+echo ""
+echo "    server_tokens off;"
+echo ""
+echo "    log_format  main  '\$remote_addr - \$remote_user [\$time_local] \"\$request\" '"
+echo "                      '\$status \$body_bytes_sent \"\$http_referer\" '"
+echo "                      '\"\$http_user_agent\" \"\$http_x_forwarded_for\" '"
+echo "                      '\"\$request_time\" \"\$upstream_response_time\" ';"
+echo ""
+echo "    access_log  /var/log/nginx/access.log  main;"
+echo ""
+echo "    sendfile        on;"
+echo "    #tcp_nopush     on;"
+echo ""
+echo "    #keepalive_timeout  0;"
+echo "    keepalive_timeout  65;"
+echo ""
+echo "    #gzip  on;"
+echo ""
+echo "    limit_conn_zone \$binary_remote_addr zone=limit_per_ip:10m;"
+echo ""
+echo "    # Load config files from the /etc/nginx/conf.d directory"
+echo "    # The default server is in conf.d/default.conf"
+echo "    include /etc/nginx/conf.d/*.conf;"
+echo ""
+echo "    server {"
+echo "        listen       80;"
+echo "        listen  [::]:80;"
+echo "        server_name  localhost;"
+echo ""
+echo "        error_page   500 502 503 504  /50x.html;"
+echo "        location = /50x.html {"
+echo "            root   /usr/share/nginx/html;"
+echo "        }"
+echo "    }"
+echo "}"
+}
+
+service_cnf()
+{
+if [ -n "$NGINX_5000_PASS" ]; then
+    echo "upstream 5000_pass{"
+    echo "  server $NGINX_5000_PASS;"
+    echo "  server $NGINX_5000_PASS backup;"
+    echo "}"
+    echo ""
+    echo "server {"
+    echo "  listen 5000;"
+    echo "  server_name localhost;"
+    echo "  charset utf-8;"
+    echo "  client_max_body_size 30M;"
+    echo ""
+    echo "  location /{"
+    echo "    proxy_pass http://5000_pass;"
+    echo "  }"
+    echo "}"
+fi
+if [ -n "$NGINX_6000_PASS" ]; then
+    echo "upstream 6000_pass{"
+    echo "  server $NGINX_6000_PASS;"
+    echo "  server $NGINX_6000_PASS backup;"
+    echo "}"
+    echo ""
+    echo "server {"
+    echo "  listen 6000;"
+    echo "  server_name localhost;"
+    echo "  charset utf-8;"
+    echo "  client_max_body_size 30M;"
+    echo ""
+    echo "  location /{"
+    echo "    proxy_pass http://6000_pass;"
+    echo "  }"
+    echo "}"
+fi
+}
+
+nginx_cnf > /etc/nginx/nginx.conf
+service_cnf > /etc/nginx/conf.d/service.conf
+
+exec "$@"
