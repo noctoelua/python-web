@@ -6,6 +6,10 @@ services:
     image: shizai-nginx
     build: ./shizai-nginx/
     restart: always
+    # depends_on:
+    #   - shizai-rest
+    #   - shizai-backend
+    #   - shizai-fluentd
     environment:
       # rest
       - NGINX_5000_PASS='shizai-rest:5000'
@@ -18,6 +22,12 @@ services:
       - 80:80
       - 5000:5000
       - 6000:6000
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: 172.16.10.224:24224
+        fluentd-async-connect: 'true'
+        tag: docker.{{.Name}}
     networks:
       shizai_net:
         ipv4_address: 172.16.10.10
@@ -27,6 +37,8 @@ services:
     image: shizai-rest
     build: ./shizai-rest/
     restart: always
+    # depends_on:
+    #   - shizai-fluentd
     environment:
       - POSITION=DEV
       - BACKEND_PASS=http://shizai-nginx:6000/
@@ -36,6 +48,12 @@ services:
       - "uwsgi"
       - "--ini"
       - "/var/service/rest/wsgi/app_rest.ini"
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: 172.16.10.224:24224
+        fluentd-async-connect: 'true'
+        tag: docker.{{.Name}}
     networks:
       shizai_net:
         ipv4_address: 172.16.10.20
@@ -45,6 +63,8 @@ services:
     image: shizai-backend
     build: ./shizai-backend/
     restart: always
+    # depends_on:
+    #   - shizai-fluentd
     environment:
       - POSITION=DEV
     volumes:
@@ -53,9 +73,28 @@ services:
       - "uwsgi"
       - "--ini"
       - "/var/service/backend/wsgi/app_backend.ini"
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: 172.16.10.224:24224
+        fluentd-async-connect: 'true'
+        tag: docker.{{.Name}}
     networks:
       shizai_net:
         ipv4_address: 172.16.10.30
+
+  shizai-fluentd:
+    container_name: shizai-fluentd
+    image: shizai-fluentd
+    build: ./shizai-fluentd/
+    # restart: always
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # - /var/log/shizai:/var/log/shizai
+    networks:
+      shizai_net:
+        ipv4_address: 172.16.10.224
 
 networks:
   shizai_net:

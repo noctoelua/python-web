@@ -42,7 +42,7 @@ service "docker" do
 end
 
 cookbook_file "/usr/bin/docker-compose" do
-  source "docker-compose"
+  source "docker-compose-v2.24.5"
   owner 'root'
   group 'root'
   mode '0755'

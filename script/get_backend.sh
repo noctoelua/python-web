@@ -1,4 +1,4 @@
-sudo bash -c 'echo -e "\n\n\n\n\n\n\n\n\n\n" >> /var/log/shizai/web_log.log'
+echo -e "\n\n\n\n\n\n\n\n\n\n" >> /var/log/shizai/web_log.log
 
 
 # curl \
