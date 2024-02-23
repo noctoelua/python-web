@@ -1,3 +1,4 @@
+# Debian 系
 FROM    nginx:1.23.1
 
 # 既存 config ファイル削除

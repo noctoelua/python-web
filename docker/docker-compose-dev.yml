@@ -6,10 +6,10 @@ services:
     image: shizai-nginx
     build: ./shizai-nginx/
     restart: always
-    # depends_on:
-    #   - shizai-rest
-    #   - shizai-backend
-    #   - shizai-fluentd
+    depends_on:
+      - shizai-rest
+      - shizai-backend
+      - shizai-fluentd
     environment:
       # rest
       - NGINX_5000_PASS='shizai-rest:5000'
@@ -91,7 +91,7 @@ services:
     tty: true
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      # - /var/log/shizai:/var/log/shizai
+      - /var/log/shizai/fluentd:/var/log/shizai/fluentd
     networks:
       shizai_net:
         ipv4_address: 172.16.10.224
