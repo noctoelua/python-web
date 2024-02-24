@@ -6,7 +6,6 @@ import os
 import sys
 from flask import Blueprint, jsonify, current_app
 
-from config import config
 sys.path.append(
     os.path.join(
         os.path.dirname(__file__), '../../common'

@@ -1,10 +1,7 @@
+"""batch コンテナステータスチェック用.
+API 利用がないためここの config はどうでもいい.
+"""
 import os
-import sqlalchemy as sa
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-
-Base = declarative_base()
 
 
 def get_config():
@@ -26,8 +23,8 @@ class BaseConfig(object):
     """ベースとなる設定.
     各環境のクラスで継承して利用する.
 
-    DICTCINFIG  : Logger で利用する設定一覧の dict
-    BACKEND_URL : backend コンテナのURL
+    DICTCINFIG: Logger で利用する設定一覧のdict.
+    DB_URI    : SQLAlchemy で利用する URI.
     """
     DICTCONFIG = {
         "version": 1,
@@ -64,12 +61,11 @@ class BaseConfig(object):
             }
         }
     }
-    BACKEND_URL = 'http://192.168.33.77:6000'
 
 
 class LocalConfig(BaseConfig):
     """local 用のcinfig
-    docker ではなく素建て用.
+
     log の level を DEBUG にすると,ユーザー設定した format で利用されている変数の利用ができなくてエラーがたくさん出るため注意.
     """
     DICTCONFIG = {
@@ -98,7 +94,6 @@ class LocalConfig(BaseConfig):
             }
         }
     }
-    BACKEND_URL = 'http://192.168.33.77:6000'
 
 
 class DevelopConfig(BaseConfig):
@@ -127,28 +122,6 @@ class DevelopConfig(BaseConfig):
             }
         }
     }
-    BACKEND_URL = os.environ.get('BACKEND_PASS', 'http://localhost:6000')
-
-
-def get_connection(DB_URI):
-    return __MyDb(DB_URI)
-
-
-class __MyDb:
-    def __init__(self, connstr, echo=False):
-        self.connstr = connstr
-        self.echo = echo
-        self.session = None
-
-    def __enter__(self):
-        self.conn = sa.create_engine(self.connstr, echo=self.echo)
-        Session = sessionmaker(bind=self.conn)
-        self.session = Session()
-        return self.session
-
-    def __exit__(self, *args, **kwargs):
-        self.session.close()
-        self.conn.dispose()
 
 
 config = get_config()

@@ -12,6 +12,10 @@ cp -r /var/vagrantshare/service/common /var/service/docker/shizai-backend/
 cp -r /var/vagrantshare/service/rest /var/service/docker/shizai-rest/
 cp -r /var/vagrantshare/service/common /var/service/docker/shizai-rest/
 
+# batch
+cp -r /var/vagrantshare/service/batch /var/service/docker/shizai-batch/
+cp -r /var/vagrantshare/service/common /var/service/docker/shizai-batch/
+
 cd /var/service/docker
 docker compose -f docker-compose-dev.yml down
 
