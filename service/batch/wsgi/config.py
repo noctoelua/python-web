@@ -53,10 +53,10 @@ class BaseConfig(object):
         },
         "formatters": {
             "consoleFormatter": {
-                "format": "%(asctime)s [%(levelname)-s] [%(log_uniq_key)s:%(log_count)s] %(message)s, %(txt)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
+                "format": "%(asctime)s [%(levelname)-s] [batch] %(message)s, %(txt)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
             },
             "logFileFormatter": {
-                "format": "{asctime} [{levelname:^8s}] [{log_uniq_key}:{log_count}] {message}, {txt} [{call_fullpath} {call_lineno} in {call_module}]",
+                "format": "{asctime} [{levelname:^8s}] [batch] {message}, {txt} [{call_fullpath} {call_lineno} in {call_module}]",
                 "style": "{"
             }
         }
@@ -90,7 +90,7 @@ class LocalConfig(BaseConfig):
         },
         "formatters": {
             "logFileFormatter": {
-                "format": "%(asctime)s [%(levelname)-7s] [%(log_uniq_key)s:%(log_count)s] %(message)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
+                "format": "%(asctime)s [%(levelname)-7s] [batch] %(message)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
             }
         }
     }
@@ -118,7 +118,7 @@ class DevelopConfig(BaseConfig):
         },
         "formatters": {
             "consoleFormatter": {
-                "format": "%(asctime)s [%(levelname)-7s] [%(log_uniq_key)s:%(log_count)s] %(message)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
+                "format": "%(asctime)s [%(levelname)-7s] [batch] %(message)s [%(call_fullpath)s %(call_lineno)s in %(call_module)s]"
             }
         }
     }

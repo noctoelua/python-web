@@ -23,7 +23,7 @@ setup_logger(dict_config=config.DICTCONFIG)
 @app.route('/status', methods=["GET", "POST"])
 def hello_world():
     Logger.info('batch status')
-    return jsonify({"message": "おーけー"})
+    return jsonify({"message": "ok"})
 
 
 if __name__ == "__main__":

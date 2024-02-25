@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# nginx コンテナを更新
+
 # docker 関連
 rm -rf /var/service/docker
 cp -r /var/vagrantshare/docker /var/service/docker
