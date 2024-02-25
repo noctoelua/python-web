@@ -4,6 +4,10 @@ shizai:
     dir: ./mysql_shizai
     table: migrations
 
-# ./bin/sql-migrate up -dryrun -env="shizai"
-# ./bin/sql-migrate up -env="shizai"
-# ./bin/sql-migrate down -env="shizai"
+# コマンド
+## 適応の確認
+### ./bin/sql-migrate up -dryrun -env="shizai"
+## 適応
+### ./bin/sql-migrate up -env="shizai"
+## migration の削除
+### ./bin/sql-migrate down -env="shizai"

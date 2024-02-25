@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# すべてのコンテナを更新
+
 # docker 関連
 rm -rf /var/service/docker
 cp -r /var/vagrantshare/docker /var/service/docker
@@ -11,6 +13,10 @@ cp -r /var/vagrantshare/service/common /var/service/docker/shizai-backend/
 # rest
 cp -r /var/vagrantshare/service/rest /var/service/docker/shizai-rest/
 cp -r /var/vagrantshare/service/common /var/service/docker/shizai-rest/
+
+# batch
+cp -r /var/vagrantshare/service/batch /var/service/docker/shizai-batch/
+cp -r /var/vagrantshare/service/common /var/service/docker/shizai-batch/
 
 cd /var/service/docker
 docker compose -f docker-compose-dev.yml down

@@ -6,10 +6,10 @@ services:
     image: shizai-nginx
     build: ./shizai-nginx/
     restart: always
-    # depends_on:
-    #   - shizai-rest
-    #   - shizai-backend
-    #   - shizai-fluentd
+    depends_on:
+      - shizai-rest
+      - shizai-backend
+      - shizai-fluentd
     environment:
       # rest
       - NGINX_5000_PASS='shizai-rest:5000'
@@ -83,15 +83,41 @@ services:
       shizai_net:
         ipv4_address: 172.16.10.30
 
+  # shizai-batch:
+  #   container_name: shizai-batch
+  #   image: shizai-batch
+  #   build: ./shizai-batch/
+  #   restart: always
+  #   # depends_on:
+  #   #   - shizai-fluentd
+  #   tty: true
+  #   environment:
+  #     - POSITION=DEV
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #   # command:
+  #   #   - "uwsgi"
+  #   #   - "--ini"
+  #   #   - "/var/service/batch/wsgi/app_batch.ini"
+  #   logging:
+  #     driver: 'fluentd'
+  #     options:
+  #       fluentd-address: 172.16.10.224:24224
+  #       fluentd-async-connect: 'true'
+  #       tag: docker.{{.Name}}
+  #   networks:
+  #     shizai_net:
+  #       ipv4_address: 172.16.10.40
+
   shizai-fluentd:
     container_name: shizai-fluentd
     image: shizai-fluentd
     build: ./shizai-fluentd/
-    # restart: always
+    restart: always
     tty: true
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      # - /var/log/shizai:/var/log/shizai
+      - /var/log/shizai/fluentd:/var/log/shizai/fluentd
     networks:
       shizai_net:
         ipv4_address: 172.16.10.224
