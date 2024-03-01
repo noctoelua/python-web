@@ -6,5 +6,5 @@ steps:
 - name: greeting
   image: python:3.6.6-onbuild
   commands:
-  - pip3 install flake8==7.0.0
+  - pip3 install flake8
   - flake8 /drone/src/docker
