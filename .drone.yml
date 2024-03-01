@@ -4,7 +4,7 @@ name: default
 
 steps:
 - name: greeting
-  image: alpine
+  image: python:3.6.6-onbuild
   commands:
-  - pwd
-  - ls
+  - pip install flake8==7.0.0
+  - flake8 /drone/src/docker
