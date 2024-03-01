@@ -7,4 +7,4 @@ steps:
   image: python:3.6.6-onbuild
   commands:
   - pip3 install flake8
-  - flake8 --ignore=E501 /drone/src/service/
+  - flake8 --ignore=E501,E402 /drone/src/service/

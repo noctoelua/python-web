@@ -1,11 +1,3 @@
-import os
-
-
-
-
-
-
-
 from BatchLogger import Logger as BatchLogger
 
 BATCH_NAME = __file__.split(".")[0]
