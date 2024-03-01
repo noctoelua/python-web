@@ -10,7 +10,7 @@ try:
     # handler1.setFormatter(logging.Formatter("%(asctime)s %(threadName)s %(levelname)8s %(message)s"))
 
     # handler2を作成
-    handler2 = logging.FileHandler(filename="/proc/1/fd/1")  #handler2はdocker logが使うPID=1のstdoutファイルへ出力
+    handler2 = logging.FileHandler(filename="/proc/1/fd/1")  # handler2はdocker logが使うPID=1のstdoutファイルへ出力
     handler2.setFormatter(logging.Formatter("%(asctime)s %(threadName)s %(levelname)8s %(message)s"))
 
     # loggerに2つのハンドラを設定
