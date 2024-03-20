@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>トップページ</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body id="training_schedule">
+
+    <div class="global-body">
+
+        <!-- header始まり -->
+        <header>
+            <div>
+                <h1>スケジュール調整</h1>
+            </div>
+        </header>
+        <!-- header終わり -->
+
+        <!-- wrap始まり -->
+        <div id="wrap">
+            <div class="content">
+                <div class="main-center">
+                    <h1>イベント一覧</h1>
+                    <div>
+                        <input class="submitbutton" type="button" value="新規作成" onclick="sendmaker()">
+                        <form action="top_get" id="contactget" method="GET"></form>
+                    </div>
+                    <br>
+
+                    <table id="content" class="table_sticky">
+                        <thead>
+                            <tr class="thead">
+                                <th>イベントリンク</th>
+                                <th>イベント名</th>
+                                <th>期限</th>
+                                <th>作成者</th>
+                                <th>作成日</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for e in eventList %}
+                            <tr>
+                                <td><a href="{{ e.eventLink }}">{{ e.eventLink }}</a></td>
+                                <td>{{ e.eventName }}</td>
+                                <td>{{ e.endDate }}</td>
+                                <td>{{ e.userId }}</td>
+                                <td>{{ e.startDate }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <br>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- wrap終わり -->
+
+        <!-- footer始まり -->
+        <footer>
+            <small>© hashimoto</small>
+        </footer>
+        <!-- footer終わり -->
+
+    </div>
+    <script type="text/javascript">
+        const eventList = {{eventList | tojson}};
+    </script>
+    <script type="text/javascript" src="../../static/js/jquery-3.4.1.min.js"></script>
+
+
+</body>
+</html>

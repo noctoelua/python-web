@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>error</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body id="err">
+
+    <div class="">
+        <p>エラーが発生しました。管理者までご連絡ください。</p>
+    </div>
+
+</body>
+
+{% if error_message %}
+
+    <div class="code-toolbar">
+        <h2>開発者用エラーメッセージ</h2>
+        <pre>
+    {% for e in error_message %}<code>{{e}}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code>
+    {% endfor %}
+        </pre>
+
+        <style>
+/* https://web.hazu.jp/css-describe-code/ より適当に拝借 */
+/* 全体を収めるブロック */
+div.code-toolbar {
+    position: relative;
+}
+
+/* 整数済み部分 */
+pre {
+    position: relative;
+    padding: 1em 1em 1em 3.8em;
+    overflow: auto;
+    counter-reset: linenumber;
+    border-left: 1px solid hsla(256, 97%, 27%, 0.71);
+    font-size: 14px;
+    box-shadow: 0 0.5px 0.5px rgba(0,0,0,0.1), 0 0.5px 0.5px rgba(0,0,0,0.1);
+    border-top: .1px solid hsla(0, 0%, 84%, 0.1);
+    border-right: .1px solid hsla(0, 0%, 84%, 0.1);
+    background: #f5f2f0;
+    display: block;
+}
+
+/* ソースコード記入部分 */
+code {
+    color: black;
+    background: none;
+    text-shadow: 0 1px white;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    position: relative;
+}
+
+/* 行数表示部分全体 */
+.line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em;
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 各行数表示 */
+.line-numbers-rows > span {
+    pointer-events: none;
+    display: block;
+    counter-increment: linenumber;
+}
+
+/* カウンター */
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+        </style>>
+    </div>
+{% endif %}
+
+</html>

@@ -1,7 +1,7 @@
 import json
 import time
 import traceback
-from flask import jsonify
+from flask import jsonify, render_template
 from functools import wraps
 
 from libs.MyLogger import Logger
@@ -60,6 +60,31 @@ class rest():
         return deco
 
 
+class front():
+    """API 用デコレータ.
+    アクセス前処理はなし.
+    アクセス後はレスポンスに
+    * StatusCode を追加
+    * Exception 処理
+    """
+    @classmethod
+    def common(cls):
+        def deco(f):
+            @wraps(f)
+            def _wrapper(*args, **keywords):
+                try:
+                    ret = f(*args, **keywords)
+                    return ret
+
+                except Exception as e:
+                    Logger.error(e)
+                    Logger.error(traceback.format_exc())
+                    error_message = [s.replace('\n', '') for s in str(traceback.format_exc()).split('\n')]
+                    return render_template('err/error500.html', error_message=error_message)
+            return _wrapper
+        return deco
+
+
 def db_log(log_flg=True, alert_limit=None):
     """db アクセス用ログ.
     経過時間及び, アクセスにかかった時間が想定以上の場合WARNINGレベルでエラーを出す.
@@ -75,14 +100,14 @@ def db_log(log_flg=True, alert_limit=None):
         def _wrapper(*args, **keywords):
             start = time.time()
             if log_flg:
-                Logger.info(f'access {f.__name__}')
+                Logger.info(f'[DB] access {f.__name__}')
             ret = f(*args, **keywords)
             proc_time = (time.time() - start)
             if log_flg:
-                Logger.info(f'success {f.__name__}, time={round(proc_time, 3)}')
+                Logger.info(f'[DB] success {f.__name__}, time={round(proc_time, 3)}')
             if alert_limit:
                 if alert_limit < proc_time:
-                    Logger.warning(f'{f.__name__} is over alert_limit, time={proc_time}')
+                    Logger.warning(f'[DB] {f.__name__} is over alert_limit, time={proc_time}')
             return ret
         return _wrapper
     return deco

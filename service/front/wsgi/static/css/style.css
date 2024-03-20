@@ -1,0 +1,381 @@
+@charset "utf-8";
+
+/* 初期化 始まり */
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+small {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    font-family: 'メイリオ', Meiryo, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}
+
+/* 初期化 終わり */
+
+
+/* 共通設定 始まり */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8ff;
+    color: #24140e;
+    font-size: 15px;
+    line-height: 2;
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    margin: 0 auto;
+    background-color: #ce7420;
+    /*darkcyan*/
+}
+
+header p {
+    color: #ffffff;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    padding: 20px 0;
+    background-color: #4f422f;
+    position: absolute;
+    bottom: 0;
+}
+
+h1 {
+    font-size: 48px;
+    text-align: center;
+    line-height: 1;
+    color: #504946;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+}
+
+h2 {
+    font-size: 24px;
+    color: #504946;
+}
+
+a {
+    text-decoration: none;
+}
+
+section {
+    margin-bottom: 35px;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+ul {
+    list-style: none;
+}
+
+.main-center {
+    /* width: 940px; */
+    width: 72%;
+    margin: 0 auto;
+}
+
+.global-nav {
+    float: right;
+    margin-top: 60px;
+}
+
+.global-nav li {
+    float: left;
+    margin: 0 20px;
+    font-size: 20px;
+    list-style: none;
+    font-family: 'Bitter', serif;
+}
+
+.global-nav li a {
+    color: #ffffff;
+}
+
+.global-nav li a:hover {
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 0px;
+    text-decoration: none;
+}
+
+.global-body {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 280px;
+    float: left;
+    padding: 28px 28px 28px 28px;
+}
+
+.icon:before {
+    content: "";
+    padding-right: 10px;
+    border-left: 7px solid #9cb4a4;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#wrap {
+    clear: both;
+    padding: 32px 0;
+}
+
+/* 共通設定 終わり */
+
+/* training_schedule 始まり */
+#training_schedule table {
+    margin: auto;
+    text-align: center;
+    border: 1px solid #2f4f4f;
+}
+
+#training_schedule th {
+    border: 1px solid #2f4f4f;
+}
+
+#training_schedule td {
+    border: 1px solid #2f4f4f;
+}
+
+#training_schedule .tr_holiday {
+    background-color: #bebebe;
+}
+
+#training_schedule .office {
+    font-size: 15px;
+    background-color: #b1f5b7;
+}
+
+#training_schedule .holiday {
+    font-size: 15px;
+    background-color: #c7ebfa;
+}
+
+#training_schedule .iidabashi {
+    font-size: 12px;
+}
+
+#training_schedule .over {
+    background-color: #fdb4eb;
+}
+
+#training_schedule .warn {
+    background-color: #f7f8be;
+}
+
+#training_schedule .copy_btn {
+    color: black;
+    font-size: 16px;
+    height: 32px;
+}
+
+#training_schedule .special {
+    background-color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "MS Pゴシック";
+    text-align: left;
+    margin-right: 500px;
+    text-decoration: none;
+    width: 192px;
+}
+
+/* #training_schedule .parallel {
+    float: right;
+} */
+
+/* training_schedule 終わり */
+#training_schedule .table_sticky {
+    display: block;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: calc(100vh/2);
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+#training_schedule .table_sticky thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #f3d1b0;
+    border-top: #FFFFFF;
+    border: 1px solid #2f4f4f;
+}
+
+#training_schedule .color_head {
+    width: calc(100% / 20);
+}
+
+#training_schedule .submitbutton {
+    background-color: #ffffff;
+    color: #885c1b;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "MS Pゴシック";
+    width: 80px;
+    /* display: block; */
+    text-align: center;
+    line-height: 32px;
+    margin: auto;
+    margin-left: 8px;
+    border-radius: 5px;
+    border: 3px solid #ce7420;
+    text-decoration: none;
+}
+
+#training_schedule .submitbutton:hover {
+    text-decoration: none;
+    background-color: #ce7420;
+    color: #ffffff;
+}
+
+#training_schedule .order_span {
+    font-size: 20px;
+    font-weight: bold;
+    color: #885c1b;
+}
+
+#training_schedule .submitdate {
+    background-color: #ffffff;
+    color: #885c1b;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "MS Pゴシック";
+    text-align: center;
+    line-height: 32px;
+    margin: auto;
+    border-radius: 5px;
+    border: 2px solid #ce7420;
+    text-decoration: none;
+    width: 192px;
+}
+
+.submitdown {
+    position: relative;
+}
+
+.submitdown::before,
+.submitdown::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+}
+
+.submitdown select {
+    /* appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; */
+    height: 2.8em;
+    padding: .4em 3.6em .4em .8em;
+    border: 3px solid #d06925;
+    border-radius: 3px;
+    color: #3f2b0d;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submitdown select:focus {
+    outline: 0px solid #d06925;
+}
+
+#training_schedule .manualbutton {
+    background-color: #ffffff;
+    color: #885c1b;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "MS Pゴシック";
+    text-align: center;
+    line-height: 32px;
+    padding: 0 15px 0 15px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    border: 3px solid #ce7420;
+    text-decoration: none;
+    height: 80px;
+    float: right;
+}
+
+#training_schedule .manualbutton:hover {
+    text-decoration: none;
+    background-color: #ddbc9d;
+    color: #ffffff;
+}
+
+#training_schedule .main_slider {
+    margin: 16px 0 16px 0;
+    background: #e1f7db;
+}
+
+#training_schedule .slider {
+    padding: 0;
+}
+
+#training_schedule .slider ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#training_schedule .slider li {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+#training_schedule .slider a {
+    display: block;
+    padding: 0px 20px 20px 20px;
+    color: #333;
+    text-decoration: none;
+}
+
+/* maintenance */
+#maintenance .maintenance {
+    font-size: 56px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 2;
+    color: #504946;
+    margin-bottom: 20px;
+}
+
+#maintenance .sub {
+    font-size:32px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 2;
+    color: #504946;
+    margin-bottom: 20px;
+}

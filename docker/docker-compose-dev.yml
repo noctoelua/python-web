@@ -15,6 +15,8 @@ services:
       - NGINX_5000_PASS='shizai-rest:5000'
       # バックエンド
       - NGINX_6000_PASS='shizai-backend:6000'
+      # front
+      - NGINX_7000_PASS='shizai-front:7000'
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/log/nginx:/var/log/nginx
@@ -22,6 +24,7 @@ services:
       - 80:80
       - 5000:5000
       - 6000:6000
+      - 7000:7000
     logging:
       driver: 'fluentd'
       options:
@@ -83,6 +86,31 @@ services:
       shizai_net:
         ipv4_address: 172.16.10.30
 
+  shizai-front:
+    container_name: shizai-front
+    image: shizai-front
+    build: ./shizai-front/
+    restart: always
+    # depends_on:
+    #   - shizai-fluentd
+    environment:
+      - POSITION=DEV
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      - "uwsgi"
+      - "--ini"
+      - "/var/service/front/wsgi/app_front.ini"
+    logging:
+      driver: 'fluentd'
+      options:
+        fluentd-address: 172.16.10.224:24224
+        fluentd-async-connect: 'true'
+        tag: docker.{{.Name}}
+    networks:
+      shizai_net:
+        ipv4_address: 172.16.10.40
+
   # shizai-batch:
   #   container_name: shizai-batch
   #   image: shizai-batch
@@ -107,7 +135,7 @@ services:
   #       tag: docker.{{.Name}}
   #   networks:
   #     shizai_net:
-  #       ipv4_address: 172.16.10.40
+  #       ipv4_address: 172.16.10.50
 
   shizai-fluentd:
     container_name: shizai-fluentd

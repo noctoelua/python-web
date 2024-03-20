@@ -102,6 +102,25 @@ if [ -n "$NGINX_6000_PASS" ]; then
     echo "  }"
     echo "}"
 fi
+if [ -n "$NGINX_7000_PASS" ]; then
+    echo "upstream 7000_pass{"
+    echo "  server $NGINX_7000_PASS;"
+    echo "  server $NGINX_7000_PASS backup;"
+    echo "}"
+    echo ""
+    echo "server {"
+    echo "  listen 7000;"
+    echo "  server_name localhost;"
+    echo "  charset utf-8;"
+    echo "  client_max_body_size 30M;"
+    echo ""
+    echo "  location /{"
+    echo "    proxy_pass http://7000_pass;"
+    echo "    proxy_set_header X-Real-IP \$remote_addr;"
+    echo "    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;"
+    echo "  }"
+    echo "}"
+fi
 }
 
 nginx_cnf > /etc/nginx/nginx.conf

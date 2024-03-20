@@ -27,9 +27,6 @@ def _get_logargs(*args, **keywords):
     _keys['call_module'] = stack.f_code.co_name
     _keys['call_lineno'] = stack.f_lineno
 
-    # デバック用テキスト出力変数
-    _keys['txt'] = "test"
-
     # ユーザー定義用 log 変数定義
     keys = dict()
     keys['extra'] = _keys
@@ -40,21 +37,6 @@ def setup_logger(dict_config=None):
     """ Logger フォーマット等設定関数
     dictConfig を利用して Config.py より設定.
     """
-    # app.logger = getLogger(target)
-    # for handler in app.logger.handlers:
-    #     handler.setFormatter(config.LOG_FORMAT)
-    #     handler.setLevel(loglevel)
-    # if not app.logger.hasHandlers():
-    #     file_handler = RotatingFileHandler(
-    #         filename,
-    #         maxBytes=10000000,
-    #         backupCount=10,
-    #         encoding='utf-8'
-    #     )
-    #     file_handler.setFormatter(Formatter(
-    #         config.LOG_FORMAT)
-    #     )
-    #     app.logger.addHandler(file_handler)
     dictConfig(dict_config)
 
 
