@@ -9,5 +9,5 @@ RUN mkdir -p /var/service/run
 
 EXPOSE 7000
 
-# COPY requirements.txt /var/tmp
-# RUN pip install -r /var/tmp/requirements.txt
+COPY requirements.txt /var/tmp
+RUN pip install -r /var/tmp/requirements.txt

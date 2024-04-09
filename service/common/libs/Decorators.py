@@ -104,10 +104,10 @@ def db_log(log_flg=True, alert_limit=None):
             ret = f(*args, **keywords)
             proc_time = (time.time() - start)
             if log_flg:
-                Logger.info(f'[DB] success {f.__name__}, time={round(proc_time, 3)}')
+                Logger.info(f'[DB] success {f.__name__}, time: {round(proc_time, 3)}  msec')
             if alert_limit:
                 if alert_limit < proc_time:
-                    Logger.warning(f'[DB] {f.__name__} is over alert_limit, time={proc_time}')
+                    Logger.warning(f'[DB] {f.__name__} is over alert_limit, time: {proc_time} msec')
             return ret
         return _wrapper
     return deco

@@ -3,7 +3,7 @@ import sys
 import json
 import time
 import random
-from flask import g, request, make_response
+from flask import g, request, make_response, session
 
 sys.path.append(
     os.path.join(
@@ -130,14 +130,21 @@ def setup_ab_request_front(app):
         ログ用変数を設定
         """
         # /static 配下へのアクセスは css/js 取得のためログは出さない
-        if '/static' not in request.url:
+        if ('/static' not in request.url) and ('favicon.ico' not in request.url):
             # 処理時間計測開始
             g.access_time = time.time()
 
             # ヘッダー取得
             headers = request.headers
             # ログのユニークキー初期化処理
-            g.log_uniq_key = headers.get('LOG-UNIQ-KEY', '%08d' % random.randint(0, 99999999))
+            if session.get('FRONT-LOG-UNIQ-KEY') is None:
+                session['FRONT-LOG-UNIQ-KEY'] = '%08d' % random.randint(0, 99999999)
+                session['FRONT-LOG-UNIQ-KEY-COUNT'] = 0
+            session['FRONT-LOG-UNIQ-KEY-COUNT'] += 1
+
+            front_log_uniq_key = session['FRONT-LOG-UNIQ-KEY']
+            front_log_uniq_key_count = session['FRONT-LOG-UNIQ-KEY-COUNT']
+            g.log_uniq_key = f'{front_log_uniq_key}-{front_log_uniq_key_count}'
             # ログカウント数初期化処理
             g.log_count = headers.get('LOG-COUNT', 0)
             if isinstance(g.log_count, str) and str.isnumeric(g.log_count):
@@ -146,12 +153,7 @@ def setup_ab_request_front(app):
                 g.log_count = 0
 
             # リクエストのエンドポイント/jsonを表示
-            if request.method == 'GET':
-                Logger.info(f'[REQUEST] GET: endpoint={request.url}, access={request.remote_addr}')
-            elif request.method == 'POST':
-                Logger.info(f'[REQUEST] POST: endpoint={request.url}, json={request.get_json()}')
-            else:
-                pass
+            Logger.info(f'[REQUEST] {request.method}: endpoint={request.url}, access={request.remote_addr}')
 
     @app.after_request
     def after_request(response):

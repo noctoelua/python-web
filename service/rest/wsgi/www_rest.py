@@ -11,7 +11,7 @@ sys.path.append(
         os.path.dirname(__file__), '../../common'
     )
 )
-from libs.RestABRequest import setup_ab_request_rest
+from libs.ABRequest import setup_ab_request_rest
 from libs.MyLogger import Logger, setup_logger
 from libs.Decorators import rest
 
