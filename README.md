@@ -1,3 +1,5 @@
+[![Build Status](http://192.168.1.231:8080/api/badges/common/python-web/status.svg)](http://192.168.1.231:8080/common/python-web)
+
 # python-web
 ## 概要
 本リポジトリは python の web サーバーを構築する際に1から作成せずに済むよう、
