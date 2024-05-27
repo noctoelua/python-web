@@ -1,5 +1,3 @@
-[![Build Status](http://192.168.1.231:8080/api/badges/common/python-web/status.svg)](http://192.168.1.231:8080/common/python-web)
-
 # python-web
 ## 概要
 本リポジトリは python の web サーバーを構築する際に1から作成せずに済むよう、
@@ -30,3 +28,12 @@
 
 ### その他のshell
 * コンテナ更新や uwsgi 更新等の開発用 shell
+
+## ログフォーマット
+```console
+container_name:/shizai-rest     log:2024-03-17 05:52:14,296 [INFO   ] [15088319:1] [REQUEST] GET: endpoint=http://5000_pass/status, access=172.16.10.10 [/var/service/common/libs/RestABRequest.py 41 in before_request]
+container_name:/shizai-rest     log:2024-03-17 05:52:14,296 [INFO   ] [15088319:3] TEST2 [/var/service/rest/wsgi/www_rest.py 35 in hello_world]
+container_name:/shizai-rest     log:2024-03-17 05:52:14,296 [WARNING] [15088319:4] TEST3 [/var/service/rest/wsgi/www_rest.py 36 in hello_world]
+container_name:/shizai-rest     log:2024-03-17 05:52:14,296 [ERROR  ] [15088319:5] TEST4 [/var/service/rest/wsgi/www_rest.py 37 in hello_world]
+container_name:/shizai-rest     log:2024-03-17 05:52:14,296 [INFO   ] [15088319:6] time: 0.613 ms   - done [/var/service/common/libs/RestABRequest.py 55 in after_request]
+```
