@@ -1,5 +1,6 @@
 vagrantfile/.vagrant
 chef-repo/local-mode-cache
-chef-repo/site-cookbooks/shizai/files/
-migration/bin
+chef-repo/site-cookbooks/shizai/files/default/docker-compose-1.23.1
+chef-repo/site-cookbooks/shizai/files/default/docker-compose-v2.24.5
+migration/bin/sql-migrate
 vagrantfile/chef-14.5.33-1.el7.x86_64.rpm
