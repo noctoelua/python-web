@@ -47,7 +47,7 @@ def hello_world_v1():
     if c == 2:
         raise RESTAPIException(
             custom_errorcode=123456789,
-            custom_errormessage="r-sakairi"
+            custom_errormessage="noctoelua"
         )
 
     else:

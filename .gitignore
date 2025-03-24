@@ -1,2 +1,5 @@
 vagrantfile/.vagrant
 chef-repo/local-mode-cache
+chef-repo/site-cookbooks/shizai/file
+migration/bin
+vagrantfile/chef-14.5.33-1.el7.x86_64.rpm
